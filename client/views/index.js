@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux';
+import Profil from './profil';
+import {setProfilName,incProfilCpt} from '../actions/profil.js';
 
 class App extends Component {
   render() {
@@ -11,11 +13,24 @@ class App extends Component {
           <h2>Welcome to React yes</h2>
         </div>
         <p className="App-intro">
-          Start here !!!
+          TEST
         </p>
+        <Profil datas={this.props.profil} inc={this.props.inc}/>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+      profil: state.profil,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      inc: ()=>{dispatch(incProfilCpt());}
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

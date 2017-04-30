@@ -8,7 +8,12 @@ import App from './views';
 import reducers from './reducers';
 let store = createStore(reducers);
 
+import {setProfilName,incProfilCpt} from './actions/profil.js';
+store.dispatch(setProfilName("My name"));
+store.dispatch(incProfilCpt());
+
 ReactDOM.render(
-  <App />,
+   <Provider store={store}>
+     <App /></Provider>,
   document.getElementById('app')
 );
