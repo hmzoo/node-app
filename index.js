@@ -26,8 +26,28 @@ app.get('/sid', function (req, res, next) {
   res.send('SID:'+req.sessionID+' index:'+req.session.index);
 });
 
+//Socket.io
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+io.on('connection', function(client) {
+  console.log('new client',client.id);
 
+  client.on('disconnect', function () {
+    console.log('client disconnected',client.id);
+  });
 
-app.listen(3000, function () {
-  console.log('node-app listening on port 3000 ...')
+    client.on('test', (data) => {
+      console.log('test',data);
+    });
+
+    client.on('MSG', (data) => {
+      data.from=client.id;
+      io.emit('MSG',data)
+      console.log('MSG',data);
+    });
+});
+
+//Start server
+server.listen(3000, function() {
+    console.log('node-app listening on port 3000 ...')
 });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Profil from './profil';
+import Messages from './messages';
 import {setProfilName,incProfilCpt} from '../actions/profil.js';
 
 class App extends Component {
@@ -12,9 +13,11 @@ class App extends Component {
 
           <h2>Welcome to React yes</h2>
         </div>
-        <p className="App-intro">
+        <p className="App-intro" >
           TEST
         </p>
+        <Messages messages={this.props.sio.messages} sendMessage={this.props.sendMessage} />
+
         <Profil datas={this.props.profil} inc={this.props.inc}/>
       </div>
     );
@@ -24,6 +27,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
     return {
       profil: state.profil,
+      sio:state.sio
     }
 }
 
