@@ -7018,3 +7018,16 @@ body {
 button {
   color: #000000;
 }
+.messages {
+  border: 2px solid #DDDDDD;
+  border-radius: 5px;
+  margin: 3px;
+}
+.messages-list {
+  margin: 5px;
+  height: 100px;
+  overflow-y: scroll;
+}
+.messages-form {
+  width: 100%;
+}

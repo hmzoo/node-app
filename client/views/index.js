@@ -13,13 +13,16 @@ class App extends Component {
 
           <h2>Welcome to React yes</h2>
         </div>
-        <p className="App-intro" >
-          TEST
-        </p>
+        <div className="grid" >
+          <div className="grid-item 2/3">
+            <Profil datas={this.props.profil} inc={this.props.inc}/>
+          </div>
+        <div className="grid-item 1/3">
         <Messages messages={this.props.sio.messages} sendMessage={this.props.sendMessage} />
-
-        <Profil datas={this.props.profil} inc={this.props.inc}/>
       </div>
+
+      </div>
+    </div>
     );
   }
 }

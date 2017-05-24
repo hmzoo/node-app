@@ -23,13 +23,13 @@ gulp.task('less', function() {
 });
 
 gulp.task('js',function(){
-var bundler = browserify(src+"main.js", { debug: true }).transform(babelify, {presets: ["es2015","react"]});
+var bundler = browserify({entries:src+"main.js", debug: true }).transform(babelify, {presets: ["es2015","react"]});
   return bundler
   .bundle().on('error',handleError)
   .pipe(source('bundle.js'))
   .pipe(buffer())
   .pipe(sourcemaps.init({ loadMaps: true }))
-  .pipe(sourcemaps.write(dst))
+  .pipe(sourcemaps.write('./'))
   .pipe(gulp.dest(dst));
 })
 

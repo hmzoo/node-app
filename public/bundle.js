@@ -92,7 +92,7 @@ socket.on('MSG', function (data) {
 });
 
 var send_msg = function send_msg(msg) {
-  console.log("send message");
+  console.log("send message", msg);
   socket.emit('MSG', { content: msg });
 };
 
@@ -30081,12 +30081,19 @@ var App = function (_Component) {
           )
         ),
         _react2.default.createElement(
-          'p',
-          { className: 'App-intro' },
-          'TEST'
-        ),
-        _react2.default.createElement(_messages2.default, { messages: this.props.sio.messages, sendMessage: this.props.sendMessage }),
-        _react2.default.createElement(_profil2.default, { datas: this.props.profil, inc: this.props.inc })
+          'div',
+          { className: 'grid' },
+          _react2.default.createElement(
+            'div',
+            { className: 'grid-item 2/3' },
+            _react2.default.createElement(_profil2.default, { datas: this.props.profil, inc: this.props.inc })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'grid-item 1/3' },
+            _react2.default.createElement(_messages2.default, { messages: this.props.sio.messages, sendMessage: this.props.sendMessage })
+          )
+        )
       );
     }
   }]);
@@ -30124,6 +30131,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30141,38 +30152,86 @@ var Messages = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Messages.__proto__ || Object.getPrototypeOf(Messages)).call(this, props));
 
     _this.state = {
-      msg: ''
-    };return _this;
+      msgtext: '',
+      over: 0
+    };
+    return _this;
   }
 
   _createClass(Messages, [{
+    key: 'onSubmit',
+    value: function onSubmit(event) {
+      event.preventDefault();
+
+      var input = _reactDom2.default.findDOMNode(this.refs.msgText);
+      var newMessage = input.value;
+      this.props.sendMessage(newMessage);
+      input.value = '';
+    }
+  }, {
+    key: 'scrollToBottom',
+    value: function scrollToBottom() {
+      var node = _reactDom2.default.findDOMNode(this.refs.messagesEnd);
+      node.scrollIntoView({ behavior: "smooth" });
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      console.log(!this.state.over);
+      if (!this.state.over) {
+        this.scrollToBottom();
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'messages' },
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'messages-list', onMouseOver: function onMouseOver() {
+              _this2.setState({ over: 1 });
+            }, onMouseOut: function onMouseOut() {
+              _this2.setState({ over: 0 });
+            } },
           this.props.messages.map(function (msg, i) {
             return _react2.default.createElement(
               'p',
-              { key: i },
+              { className: 'm--', key: i },
               _react2.default.createElement(
                 'b',
-                null,
+                { className: 'fz--' },
                 msg.from,
                 ':'
               ),
               msg.content
             );
           }),
-          _react2.default.createElement('input', { type: 'text', value: '' }),
+          _react2.default.createElement('span', { ref: 'messagesEnd' })
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.onSubmit.bind(this) },
           _react2.default.createElement(
-            'button',
-            { className: 'btn', onClick: this.props.sendMessage },
-            'SEND'
+            'div',
+            { className: 'grid m' },
+            _react2.default.createElement(
+              'div',
+              { className: 'grid-item 9/12' },
+              _react2.default.createElement('input', { type: 'text', ref: 'msgText', className: 'form-input' })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'grid-item 3/12' },
+              _react2.default.createElement(
+                'button',
+                { className: 'btn btn-primary', type: 'submit' },
+                'SEND'
+              )
+            )
           )
         )
       );
@@ -30184,7 +30243,7 @@ var Messages = function (_React$Component) {
 
 exports.default = Messages;
 
-},{"react":245}],275:[function(require,module,exports){
+},{"react":245,"react-dom":79}],275:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30221,4 +30280,4 @@ exports.default = function (_ref) {
 
 },{"react":245}]},{},[3])
 
-//# sourceMappingURL=../public/bundle.js.map
+//# sourceMappingURL=bundle.js.map

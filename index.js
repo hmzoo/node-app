@@ -10,6 +10,7 @@ var sess = {
   cookie: {maxAge: 3600000}
 }
 
+
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1) // trust first proxy
   sess.cookie.secure = true // serve secure cookies
@@ -25,6 +26,7 @@ app.get('/sid', function (req, res, next) {
   // View "session-index.ejs"
   res.send('SID:'+req.sessionID+' index:'+req.session.index);
 });
+
 
 //Socket.io
 var server = require('http').createServer(app);

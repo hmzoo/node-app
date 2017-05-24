@@ -9,6 +9,8 @@ import App from './views';
 import reducers from './reducers';
 let store = createStore(reducers);
 
+
+
 import {setProfilName,incProfilCpt} from './actions/profil.js';
 store.dispatch(setProfilName("My name"));
 store.dispatch(incProfilCpt());
@@ -25,7 +27,7 @@ socket.on('MSG', (data) => {
 });
 
 let send_msg= (msg)=>{
-  console.log("send message");
+  console.log("send message",msg);
   socket.emit('MSG',{content:msg});
 }
 
